@@ -9,28 +9,17 @@ const m = moment();
 app.use(express.json());
 app.use(cors());
 
-//Use this array as your (in-memory) data store.
-//let bookings = require("./bookings.json");
- 
-
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
 });
 
-// user: "postgres",
-//   host: "localhost",
-//   database: "cyf_hotels",
-//   password: "",
-//   port: 5432,
 const { json } = require("express");
 const res = require("express/lib/response");
 
 app.get("/", (req, res) => {
   res.send("Hotel booking server.  Ask for /bookings, etc.");
 });
-
-// TODO add your routes and helper functions here
 
 app.get("/bookings", (req, res) => {
   pool
@@ -104,9 +93,6 @@ app.delete("/bookings/:id", (req, res) => {
       res.status(500).json(err);
     });
 });
-//export DATABASE_URL=postgres://margaritaglushkova:@localhost:5432/cyf_hotels?sslmode=disable
-// app.delete("/customers/:id/bookings", (res, req))
-// //customers/:id/bookings
 
 app.post("/hotels", async (req, res) => {
   const { hotelName, hotelRooms, hotelPostcode } = req.body;
@@ -199,9 +185,6 @@ app.post("/bookings", async (req, res) => {
     res.status(400).json("Something went wrong");
   }
 });
-// const listener = app.listen(process.env.PORT, function () {
-//   console.log("Your app is listening on port " + listener.address().port);
-// });
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
